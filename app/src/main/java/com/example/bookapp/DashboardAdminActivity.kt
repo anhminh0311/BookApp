@@ -39,6 +39,7 @@ class  DashboardAdminActivity : AppCompatActivity() {
         if (firebaseUser == null){
             //not logged in, move to main screen
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
         else {
             //logged in, get n show user in4
