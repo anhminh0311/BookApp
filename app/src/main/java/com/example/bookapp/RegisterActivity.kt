@@ -33,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
         //init firebase auth
         firebaseAuth = FirebaseAuth.getInstance()
 
-        //init process dialog
+        //init process dialog, will show while register user
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Please wait")
         progressDialog.setCanceledOnTouchOutside(false)
