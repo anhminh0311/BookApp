@@ -1,11 +1,13 @@
 package com.example.bookapp
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.bookapp.databinding.RowPdfAdminBinding
@@ -67,6 +69,40 @@ class AdapterPdfAdmin :RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin>, Fil
 
         //load pdf size
         MyApplication.loadPdfSize(pdfUrl, title, holder.sizeTv)
+
+        //handle click, show dialog with option 1) Edit Book, 2) Delete Book
+        holder.moreBtn.setOnClickListener {
+            moreOptionsDialog(model, holder)
+        }
+
+    }
+
+    private fun moreOptionsDialog(model: ModelPdf, holder: AdapterPdfAdmin.HolderPdfAdmin) {
+        //get id, title, url of book
+        val bookId = model.id
+        val bookUrl = model.url
+        val bookTitle = model.title
+
+        //option 2 show in dialog
+        val options = arrayOf("Edit", "Delete")
+
+        //alert dialog
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Choose Option")
+            .setItems(options){dialog, position->
+                //handle item click
+                if (position == 0){
+                    //Edit is clicked
+                    val intent = Intent(context, PdfEditActivity::class.java)
+                    intent.putExtra("bookId", bookId) //passed bookId, will be use to edit the book
+                    context.startActivity(intent)
+                }
+                else if (position == 1){
+                    //Delete is clicked
+                    MyApplication.deleteBook(context, bookId, bookUrl, bookTitle)
+                }
+            }
+            .show()
 
     }
 
