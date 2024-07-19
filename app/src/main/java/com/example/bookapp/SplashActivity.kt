@@ -43,9 +43,7 @@ class SplashActivity : AppCompatActivity() {
             val ref = FirebaseDatabase.getInstance().getReference("Users")
             ref.child(firebaseUser.uid)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
-
                     override fun onDataChange(snapshot: DataSnapshot) {
-
                         //get user type
                         val userType = snapshot.child("userType").value
                         if (userType == "user"){
@@ -59,9 +57,7 @@ class SplashActivity : AppCompatActivity() {
                             finish()
                         }
                     }
-
                     override fun onCancelled(error: DatabaseError) {
-
                     }
                 })
         }

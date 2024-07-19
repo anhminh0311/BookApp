@@ -26,7 +26,7 @@ class MyApplication: Application(){
         super.onCreate()
     }
     companion object{
-        //created a static method to convert timestamp to proper date format, so we can use it everywhere in the project with out rewrite it again
+        //created a static method to convert timestamp to proper date format, so we can use it everywhere in the project without rewrite it again
         fun formatTimeStamp(timestamp: Long) : String{
             val cal = Calendar.getInstance(Locale.ENGLISH)
             cal.timeInMillis = timestamp
@@ -187,6 +187,38 @@ class MyApplication: Application(){
                     Toast.makeText(context, "Failed to delete due to ${e.message}", Toast.LENGTH_SHORT).show()
                 }
 
+        }
+
+        fun incrementBookViewCount(bookId: String){
+            //Get current book views count
+            val ref = FirebaseDatabase.getInstance().getReference("Books")
+            ref.child(bookId)
+                .addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        //get views count
+                        var viewsCount = "${snapshot.child("viewsCount").value}"
+
+                        if (viewsCount == "" || viewsCount == "null"){
+                            viewsCount = "0";
+                        }
+
+                        //2) increment view count
+                        val newViewsCount = viewsCount.toLong() +1
+
+                        //setup data 2 upload 2 db
+                        val hashMap = HashMap<String, Any>()
+                        hashMap["viewsCount"] = newViewsCount
+
+                        //set to db
+                        val dbRef = FirebaseDatabase.getInstance().getReference("Books")
+                        dbRef.child(bookId)
+                            .updateChildren(hashMap)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
         }
 
     }

@@ -52,10 +52,7 @@ class RegisterActivity : AppCompatActivity() {
             4-Save User in4
              */
             validateDate()
-
         }
-
-
     }
 
     private var name = ""

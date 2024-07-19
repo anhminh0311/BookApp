@@ -64,7 +64,7 @@ class AdapterPdfAdmin :RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin>, Fil
         //load category
         MyApplication.loadCategory(categoryId, holder.categoryTv)
 
-        //dont need page number here -> pas null 4 page number || load pdf thumbnail
+        //don't need page number here -> pas null 4 page number || load pdf thumbnail
         MyApplication.loadPdfFromUrlSinglePage(pdfUrl, title, holder.pdfView, holder.progressBar, null)
 
         //load pdf size
@@ -73,6 +73,14 @@ class AdapterPdfAdmin :RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin>, Fil
         //handle click, show dialog with option 1) Edit Book, 2) Delete Book
         holder.moreBtn.setOnClickListener {
             moreOptionsDialog(model, holder)
+        }
+
+        //handle item click, open PdfDetailActivity activity
+        holder.itemView.setOnClickListener {
+            //intent with book id
+            val intent = Intent(context, PdfDetailActivity::class.java)
+            intent.putExtra("bookId", pdfId) //will be used to load book details
+            context.startActivity(intent)
         }
 
     }
@@ -125,7 +133,7 @@ class AdapterPdfAdmin :RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin>, Fil
         val pdfView = binding.pdfView
         val progressBar = binding.progressBar
         val titleTv = binding.titleTv
-        val descriptionTv = binding.descriptionTV
+        val descriptionTv = binding.descriptionTv
         val categoryTv = binding.categoryTv
         val sizeTv = binding.sizeTv
         val dateTv = binding.dateTv

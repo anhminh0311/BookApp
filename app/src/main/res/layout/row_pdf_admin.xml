@@ -42,7 +42,7 @@
 
         <!--Description-->
         <TextView
-            android:id="@+id/descriptionTV"
+            android:id="@+id/descriptionTv"
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

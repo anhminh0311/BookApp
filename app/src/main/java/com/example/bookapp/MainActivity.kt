@@ -21,12 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         //handle click, login
         binding.loginBtn.setOnClickListener {
-            //will do later
             startActivity(Intent(this,LoginActivity::class.java))
         }
-        //hand click, skip and continue to main screen
+        //hand click, go to user dashboard without login
         binding.skipBtn.setOnClickListener {
-            //will do later
             startActivity(Intent(this, DashboardUserActivity::class.java))
         }
 
